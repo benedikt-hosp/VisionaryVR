@@ -1,99 +1,39 @@
-<<<<<<< HEAD
-# GenericVRExperimentManager
+# VisionaryVR
 
+Research code accompanying the **VisionaryVR** publication: a Unity project for running controlled vision experiments in virtual reality, with eye tracking, depth calibration, autofocal-display control, questionnaires and structured logging.
 
+- **Paper:** the publication on VisionaryVR (B. W. Hosp et al.). No DOI is given in this repository; see the reference list of the paper.
+- **Status:** research code, not maintained. Issues and pull requests may not be answered.
+- **Unity version:** 6000.0.11f1.
+- **License:** MIT, see [LICENSE](LICENSE). The license covers the code in this repository only, **not** the third-party SDKs and plugins listed below.
 
-## Getting started
+## What is in this repository
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- `Assets/Scripts/`: experiment management (state machine, conditions, protocols), eye-tracking controller modules (`Module_ETController`), depth calibration and regression (`Module_DepthCalibration`), autofocal controller (`Module_AutofocalController`), experiment recorder and logging (`DataInformation`, `Module_ExperimentRecorder`), questionnaire UI (`Source/DataInformation`), XTAL / SteamVR controller input (`Module_VrgControllers`).
+- `Assets/Resources/`: protocols (`Protocols/`), questionnaires (`Questionnaires/TLX.json`, `PIS.json`), UI prefabs, instruction images and stimulus textures.
+- `Assets/Scenes/`: main menu, base, experiment and questionnaire scenes.
+- `Assets/Resources/EyeTrackingProviders/*/*Provider.cs`: the adapter scripts for the supported eye trackers (SDKs not included, see below).
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+No study data are included. Log files and questionnaire results are written by the experiment at run time and are excluded by `.gitignore`.
 
-## Add your files
+## Third-party SDKs
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+The vendor SDKs and several third-party plugins are **not** included, because their licenses do not allow redistribution or because they are large binaries. Download them yourself and copy them to the folders below (paths relative to `Assets/`).
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/zvsl/genericvrexperimentmanager.git
-git branch -M main
-git push -uf origin main
-```
+| Component | What to download | Where to put it |
+|---|---|---|
+| Tobii Pro SDK (Unity) | Tobii Pro SDK for Unity from Tobii (End User License Agreement applies) | `Resources/EyeTrackingProviders/TobiiPro/` (next to `TobiiProProvider.cs`) |
+| Tobii XR SDK | Tobii XR SDK Unity package from Tobii | `Resources/EyeTrackingProviders/TobiiXR/` (next to `TobiiXRProvider.cs`) |
+| HTC Vive Pro Eye (SRanipal) | SRanipal / Vive Eye Tracking SDK from HTC | `Resources/EyeTrackingProviders/SuperRealityAnipal/ViveSR/` |
+| XTAL (VRgineers) | XTAL Unity plugin from VRgineers | `Resources/EyeTrackingProviders/XTAL/vrgineers/` (next to `XTALProvider.cs`) |
+| SteamVR Unity Plugin | <https://github.com/ValveSoftware/steamvr_unity_plugin> (also in the Unity Asset Store) | `SteamVR/` (default location). After import, let the plugin regenerate its input actions; `Assets/SteamVR_Input/` is generated code. |
+| Libraries for depth calibration, recording and networking | NuGet / vendor downloads: Emgu.CV, Newtonsoft.Json, SharpLearning (AdaBoost, Containers, CrossValidation, DecisionTrees, Ensemble, FeatureTransformations, GradientBoost, InputOutput, Metrics, Optimization, RandomForest, XGBoost, Common.Interfaces), XGBoost.dll and libxgboost.dll, SkLearnForNet, websocket-sharp, OpenH264 (openh264-2.3.1-win32.dll) | `Plugins/` |
+| NuGetForUnity | NuGetForUnity (its editor DLL) | `NuGet/Editor/` |
+| Room and interior models (desk, keyboard, mug, screen, smartphone, TV) | Not redistributed (license unclear). Use your own models. | `Room/` |
 
-## Integrate with your tools
+Notes:
 
-- [ ] [Set up project integrations](https://gitlab.com/zvsl/genericvrexperimentmanager/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
-=======
-Implementation of the publication of
-# VisionaryVR 
-
-
->>>>>>> origin/main
+- The folders above are listed in `.gitignore`.
+- Without the SDKs the project does not compile as is. Import the SDKs of the eye tracker you use and the plugins in `Plugins/`, or remove the modules you do not need.
+- `Assets/Prefabs/Interior*.prefab` and the experiment scene refer to the removed room models and show missing references until you assign your own.
+- `Assets/Scenes/02_Experiment/Content/` contains Roboto Condensed fonts (Apache License 2.0).
